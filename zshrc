@@ -55,7 +55,7 @@ ZSH_THEME="lukerandall"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git spotify)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -68,13 +68,13 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+export EDITOR='vim'
 # else
 #   export EDITOR='mvim'
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -88,6 +88,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias lrt="l -rt"
+alias l="exa -lagh"
+alias lrt="l -s modified"
 alias ltr="lrt"
 alias f="fg"
+alias run="./manage.py runserver 0.0.0.0:8000"
+alias ptest="./manage.py test"
+alias jdoc="firefox /usr/share/doc/java9-openjdk/api/index.html"
+alias vdoc="firefox /usr/share/doc/vulkan/apispec.html"
+
+export GOPATH="$HOME/Projects/Go"
