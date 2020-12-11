@@ -2,12 +2,13 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/erick/.oh-my-zsh
+export ZSH=/home/erick/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="lukerandall"
+ZSH_THEME="norm"
+#ZSH_THEME="norm-no-git"
 # ZSH_THEME="theunraveler"
 # ZSH_THEME="terminalpary"
 # ZSH_THEME="agnoster"
@@ -55,7 +56,7 @@ ZSH_THEME="lukerandall"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git spotify)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -68,7 +69,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-export EDITOR='vim'
+export EDITOR='nvim'
+export VISUAL='nvim'
 # else
 #   export EDITOR='mvim'
 # fi
@@ -92,9 +94,13 @@ alias l="exa -lagh"
 alias lrt="l -s modified"
 alias ltr="lrt"
 alias f="fg"
-alias run="./manage.py runserver 0.0.0.0:8000"
-alias ptest="./manage.py test"
-alias jdoc="firefox /usr/share/doc/java9-openjdk/api/index.html"
-alias vdoc="firefox /usr/share/doc/vulkan/apispec.html"
+alias vim="nvim"
+alias gg="git log --all --decorate --oneline --graph"
+alias clippy="cargo clippy --all-features --all-targets --release -- -D warnings -Zunstable-options"
 
-export GOPATH="$HOME/Projects/Go"
+export FZF_DEFAULT_COMMAND="fd --type f"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# opam configuration
+test -r /home/erick/.opam/opam-init/init.zsh && . /home/erick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

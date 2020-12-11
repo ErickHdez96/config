@@ -13,7 +13,7 @@ set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:adobe source code pro 9
+font fira code:9
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -176,4 +176,4 @@ bindcode 122 exec --no-startup-id amixer set Master 5%-
 bindcode 123 exec --no-startup-id amixer set Master 5%+
 bindcode 121 exec --no-startup-id amixer set Master toggle
 bindcode 74 exec --no-startup-id xinput set-prop 11 276 $(xinput list-props 11 | grep 276 | grep --quiet -o "1$" && echo 0 || echo 1)
-exec_always --no-startup-id setxkbmap -option grp:rctrl_rshift_toggle -layout "us,latam,de"
+exec_always --no-startup-id setxkbmap -option grp:rctrl_rshift_toggle -layout "us,latam"
