@@ -1,5 +1,10 @@
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 
+# cd behaves like pushd
+setopt autopushd
+# Don't push the same dir to dirs
+setopt pushdignoredups
+
 # Set prompt for zsh
 # λ Hostname Path →
 export PROMPT="%F{yellow}λ %m %F{green}%c %F{yellow}→ %f"
@@ -108,6 +113,8 @@ alias gg="git log --all --decorate --oneline --graph"
 alias clippy="cargo clippy --all-features --all-targets --release -- -D warnings -Zunstable-options"
 #alias cstdin="echo \"Ctrl-D once done\" && gcc -o ~/.stdin ~/.cstdin.c -O2 -Wall && ~/.stdin"
 alias cstdin="gcc -o ~/.stdin ~/.cstdin.c -O2 -Wall && ~/.stdin"
+
+alias d="dirs"
 
 export FZF_DEFAULT_COMMAND="fd --type f"
 export CPPUTEST_HOME="$HOME/Projects/Github/cpputest"
