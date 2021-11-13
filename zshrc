@@ -1,94 +1,103 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 
-# Path to your oh-my-zsh installation.
-export ZSH=/home/erick/.oh-my-zsh
+# Set prompt for zsh
+# λ Hostname Path →
+export PROMPT="%F{yellow}λ %m %F{green}%c %F{yellow}→ %f"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="norm"
-#ZSH_THEME="norm-no-git"
-# ZSH_THEME="theunraveler"
-# ZSH_THEME="terminalpary"
-# ZSH_THEME="agnoster"
-# ZSH_THEME="robbyrussell"
+WORDCHARS=''
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+unsetopt menu_complete # do not autoselect the first completion entry
+unsetopt flowcontrol
+setopt auto_menu # show completion menu on successive tab press
+setopt complete_in_word
+setopt always_to_end
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+# Highlight selected tab option
+zstyle ':completion:*:*:*:*:*' menu select
+# Case insensitive and hyphen insensitive
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
+# Complete . and .. special directories
+zstyle ':completion:*' special-dirs true
+# Show special colors for directories in auto complete options
+zstyle ':completion:*' list-colors ''
+# Copied from oh-my-zsh
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+# Disable named-directories autocompletion
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+# Use caching so that commands like apt and dpkg complete are useable
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+autoload -U +X bashcompinit && bashcompinit
+# Load auto completions
+autoload -U compaudit compinit
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+# Move through text
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+bindkey '^b' backward-char
+bindkey '^f' forward-char
+bindkey '^d' delete-char-or-list
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+bindkey '^[b' backward-word
+bindkey '^[f' forward-word
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+# Edit text
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+bindkey '^k' kill-line
+bindkey '^u' kill-whole-line
+bindkey '^[d' kill-word
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+bindkey '^v' quoted-insert
+bindkey '^y' yank
+bindkey '^[t' transpose-words
+bindkey '^[w' copy-region-as-kill
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# Move through history
+bindkey '^P' up-line-or-history
+bindkey '^N' down-line-or-history
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+bindkey '^r' history-incremental-search-backward
+bindkey '^s' history-incremental-search-forward
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+bindkey '^q' push-line
+bindkey '^g' get-line
+bindkey '^[q' push-line
+bindkey '^[g' get-line
+bindkey '^[h' run-help
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+bindkey '^x=' what-cursor-position
+bindkey '^[a' accept-and-hold # Run command but keep it in the prompt
 
-source $ZSH/oh-my-zsh.sh
+# Expand !
+bindkey ' ' magic-space
 
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
+export SUDO_EDITOR='/home/erick/bin/nvim'
 export EDITOR='nvim'
 export VISUAL='nvim'
-# else
-#   export EDITOR='mvim'
-# fi
 
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias gst="git status"
+alias gc="git commit -v"
+alias gca="git commit -v --ammend"
+alias gd="git diff"
+alias gdc="git diff --cache"
+alias gp="git push"
+alias gl="git pull"
+alias gg="git log --all --decorate --oneline --graph"
+alias gaa="git add -A"
+alias ga="git add"
+alias gco="git checkout"
+alias gcob="git checkout -b"
+alias gb="git branch"
+alias gbD="git branch -D"
 
 alias l="exa -lagh"
 alias lrt="l -s modified"
@@ -97,8 +106,11 @@ alias f="fg"
 alias vim="nvim"
 alias gg="git log --all --decorate --oneline --graph"
 alias clippy="cargo clippy --all-features --all-targets --release -- -D warnings -Zunstable-options"
+#alias cstdin="echo \"Ctrl-D once done\" && gcc -o ~/.stdin ~/.cstdin.c -O2 -Wall && ~/.stdin"
+alias cstdin="gcc -o ~/.stdin ~/.cstdin.c -O2 -Wall && ~/.stdin"
 
 export FZF_DEFAULT_COMMAND="fd --type f"
+export CPPUTEST_HOME="$HOME/Projects/Github/cpputest"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
