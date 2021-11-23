@@ -36,7 +36,8 @@ zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
 
 autoload -U +X bashcompinit && bashcompinit
 # Load auto completions
-autoload -U compaudit compinit
+#autoload -U compaudit compinit
+autoload -Uz compaudit compinit && compinit
 
 # Move through text
 bindkey '^a' beginning-of-line
@@ -75,6 +76,9 @@ bindkey '^[h' run-help
 
 bindkey '^x=' what-cursor-position
 bindkey '^[a' accept-and-hold # Run command but keep it in the prompt
+
+# Fix pipenv shell weird behavior with ^[f
+bindkey -r '^['
 
 # Expand !
 bindkey ' ' magic-space
@@ -119,7 +123,7 @@ alias d="dirs"
 export FZF_DEFAULT_COMMAND="fd --type f"
 export CPPUTEST_HOME="$HOME/Projects/Github/cpputest"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export LC_ALL='en_US.UTF-8'
+export LANG='en_US.UTF-8'
 
-# opam configuration
-test -r /home/erick/.opam/opam-init/init.zsh && . /home/erick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
