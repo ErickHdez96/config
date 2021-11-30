@@ -97,7 +97,7 @@ alias gst="git status"
 alias gc="git commit -v"
 alias gca="git commit -v --ammend"
 alias gd="git diff"
-alias gdc="git diff --cache"
+alias gdca="git diff --cached"
 alias gp="git push"
 alias gl="git pull"
 alias gg="git log --all --decorate --oneline --graph"
@@ -107,6 +107,8 @@ alias gco="git checkout"
 alias gcob="git checkout -b"
 alias gb="git branch"
 alias gbD="git branch -D"
+alias gr="git reset"
+alias grh="git reset --hard"
 
 alias l="exa -lagh"
 alias lrt="l -s modified"
@@ -125,5 +127,8 @@ export CPPUTEST_HOME="$HOME/Projects/Github/cpputest"
 
 export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+(( $+commands[wos] )) && source $(wos cli-vars cmp)
