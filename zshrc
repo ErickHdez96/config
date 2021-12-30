@@ -34,6 +34,8 @@ zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-dir
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
 
+autoload -z edit-command-line
+zle -N edit-command-line
 autoload -U +X bashcompinit && bashcompinit
 # Load auto completions
 #autoload -U compaudit compinit
@@ -74,7 +76,9 @@ bindkey '^[q' push-line
 bindkey '^[g' get-line
 bindkey '^[h' run-help
 
+# Misc
 bindkey '^x=' what-cursor-position
+bindkey '^x^e' edit-command-line
 bindkey '^[a' accept-and-hold # Run command but keep it in the prompt
 
 # Fix pipenv shell weird behavior with ^[f
@@ -95,7 +99,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 alias gst="git status"
 alias gc="git commit -v"
-alias gca="git commit -v --ammend"
+alias gca="git commit -v --amend"
 alias gd="git diff"
 alias gdca="git diff --cached"
 alias gp="git push"
@@ -108,7 +112,8 @@ alias gcob="git checkout -b"
 alias gb="git branch"
 alias gbD="git branch -D"
 alias gr="git reset"
-alias grh="git reset --hard"
+alias grh="git reset"
+alias gc!="git commit --amend"
 
 alias l="exa -lagh"
 alias lrt="l -s modified"
@@ -131,4 +136,8 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-(( $+commands[wos] )) && source $(wos cli-vars cmp)
+if [[ "$OSTYPE" == darwin* ]]; then
+	(( $+commands[wos] )) && source $(wos cli-vars cmp)
+	eval "$(pyenv init --path)"
+	eval "$(pyenv init -)"
+fi
