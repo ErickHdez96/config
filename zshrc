@@ -1,5 +1,11 @@
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt extended_history
+
 # cd behaves like pushd
 setopt autopushd
 # Don't push the same dir to dirs
