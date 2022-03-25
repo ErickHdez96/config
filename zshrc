@@ -11,6 +11,11 @@ export PROMPT="%F{yellow}λ %m %F{green}%c %F{yellow}→ %f"
 
 WORDCHARS=''
 
+# ZSH sessions append to the history, instead of replacing it
+setopt append_history
+# Don't save multiple duplicated commands
+setopt hist_ignore_dups
+
 unsetopt menu_complete # do not autoselect the first completion entry
 unsetopt flowcontrol
 setopt auto_menu # show completion menu on successive tab press
@@ -135,9 +140,12 @@ export LANG='en_US.UTF-8'
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -d ~/.zsh/completion ] && fpath=(~/.zsh/completion $fpath)
 
 if [[ "$OSTYPE" == darwin* ]]; then
 	(( $+commands[wos] )) && source $(wos cli-vars cmp)
 	eval "$(pyenv init --path)"
 	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+	export COMPOSE_PROFILES=dev
 fi
