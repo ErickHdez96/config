@@ -147,3 +147,13 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	eval "$(pyenv init --path)"
 	eval "$(pyenv init -)"
 fi
+
+
+case "$TERM" in
+	alacritty) export TERM=xterm-256color;;
+esac
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
