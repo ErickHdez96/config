@@ -1,5 +1,11 @@
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt extended_history
+
 # cd behaves like pushd
 setopt autopushd
 # Don't push the same dir to dirs
@@ -149,3 +155,13 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	eval "$(pyenv virtualenv-init -)"
 	export COMPOSE_PROFILES=dev
 fi
+
+
+case "$TERM" in
+	alacritty) export TERM=xterm-256color;;
+esac
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
