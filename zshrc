@@ -98,9 +98,15 @@ bindkey -r '^['
 # Expand !
 bindkey ' ' magic-space
 
-export SUDO_EDITOR='/home/erick/bin/nvim'
-export EDITOR='nvim'
-export VISUAL='nvim'
+if type "$nvim" > /dev/null; then
+	export SUDO_EDITOR='/home/erick/bin/nvim'
+	export EDITOR='nvim'
+	export VISUAL='nvim'
+else
+	export SUDO_EDITOR='vim'
+	export EDITOR='vim'
+	export VISUAL='vim'
+fi
 
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
@@ -130,7 +136,9 @@ alias l="exa -lagh"
 alias lrt="l -s modified"
 alias ltr="lrt"
 alias f="fg"
-alias vim="nvim"
+if type "$nvim" > /dev/null; then
+	alias vim="nvim"
+fi
 alias gg="git log --all --decorate --oneline --graph"
 alias clippy="cargo clippy --all-features --all-targets --release -- -D warnings -Zunstable-options"
 #alias cstdin="echo \"Ctrl-D once done\" && gcc -o ~/.stdin ~/.cstdin.c -O2 -Wall && ~/.stdin"
