@@ -156,7 +156,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	export COMPOSE_PROFILES=dev
 fi
 
-
 case "$TERM" in
 	alacritty) export TERM=xterm-256color;;
 esac
