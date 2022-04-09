@@ -170,14 +170,16 @@ if [[ -d "$HOME/Projects/Pico/pico-sdk" ]]; then
 	export PICO_SDK_PATH="$HOME/Projects/Pico/pico-sdk"
 fi
 
-case "$TERM" in
-	alacritty) export TERM=xterm-256color;;
-esac
+if [[ -f "$HOME/pi" ]]; then
+	case "$TERM" in
+		alacritty) export TERM=xterm-256color;;
+	esac
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
+	# set a fancy prompt (non-color, unless we know we "want" color)
+	case "$TERM" in
+	    xterm-color|*-256color) color_prompt=yes;;
+	esac
+fi
 
 if type xclip > /dev/null; then
 	function cb() {
