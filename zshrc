@@ -17,6 +17,11 @@ export PROMPT="%F{yellow}λ %m %F{green}%c %F{yellow}→ %f"
 
 WORDCHARS=''
 
+# ZSH sessions append to the history, instead of replacing it
+setopt append_history
+# Don't save multiple duplicated commands
+setopt hist_ignore_dups
+
 unsetopt menu_complete # do not autoselect the first completion entry
 unsetopt flowcontrol
 setopt auto_menu # show completion menu on successive tab press
@@ -93,9 +98,15 @@ bindkey -r '^['
 # Expand !
 bindkey ' ' magic-space
 
-export SUDO_EDITOR='/home/erick/bin/nvim'
-export EDITOR='nvim'
-export VISUAL='nvim'
+if type "$nvim" > /dev/null; then
+	export SUDO_EDITOR='/home/erick/bin/nvim'
+	export EDITOR='nvim'
+	export VISUAL='nvim'
+else
+	export SUDO_EDITOR='vim'
+	export EDITOR='vim'
+	export VISUAL='vim'
+fi
 
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
@@ -125,7 +136,9 @@ alias l="exa -lagh"
 alias lrt="l -s modified"
 alias ltr="lrt"
 alias f="fg"
-alias vim="nvim"
+if type "$nvim" > /dev/null; then
+	alias vim="nvim"
+fi
 alias gg="git log --all --decorate --oneline --graph"
 alias clippy="cargo clippy --all-features --all-targets --release -- -D warnings -Zunstable-options"
 #alias cstdin="echo \"Ctrl-D once done\" && gcc -o ~/.stdin ~/.cstdin.c -O2 -Wall && ~/.stdin"
@@ -141,13 +154,25 @@ export LANG='en_US.UTF-8'
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -d ~/.zsh/completion ] && fpath=(~/.zsh/completion $fpath)
 
 if [[ "$OSTYPE" == darwin* ]]; then
 	(( $+commands[wos] )) && source $(wos cli-vars cmp)
 	eval "$(pyenv init --path)"
 	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+	export COMPOSE_PROFILES=dev
 fi
 
 if [[ -d "$HOME/Projects/Pico/pico-sdk" ]]; then
 	export PICO_SDK_PATH="$HOME/Projects/Pico/pico-sdk"
 fi
+
+case "$TERM" in
+	alacritty) export TERM=xterm-256color;;
+esac
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
