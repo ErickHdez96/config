@@ -147,3 +147,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	eval "$(pyenv init --path)"
 	eval "$(pyenv init -)"
 fi
+
+if [[ -d "$HOME/Projects/Pico/pico-sdk" ]]; then
+	export PICO_SDK_PATH="$HOME/Projects/Pico/pico-sdk"
+fi
