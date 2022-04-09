@@ -1,3 +1,5 @@
+# Basic functionality
+
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 
 export HISTSIZE=10000
@@ -176,3 +178,9 @@ esac
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
+
+if type xclip > /dev/null; then
+	function cb() {
+		xclip -selection clipboard $1;
+	}
+fi
