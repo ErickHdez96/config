@@ -98,7 +98,7 @@ bindkey -r '^['
 # Expand !
 bindkey ' ' magic-space
 
-if type "$nvim" > /dev/null; then
+if type nvim > /dev/null; then
 	export SUDO_EDITOR='/home/erick/bin/nvim'
 	export EDITOR='nvim'
 	export VISUAL='nvim'
@@ -136,7 +136,7 @@ alias l="exa -lagh"
 alias lrt="l -s modified"
 alias ltr="lrt"
 alias f="fg"
-if type "$nvim" > /dev/null; then
+if type nvim > /dev/null; then
 	alias vim="nvim"
 fi
 alias gg="git log --all --decorate --oneline --graph"
@@ -162,6 +162,12 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
 	export COMPOSE_PROFILES=dev
+
+	if [[ -d "$HOME/.config/aws" ]]; then
+		export AWS_ACCESS_KEY=$(cat $HOME/.config/aws/access_key_id)
+		export AWS_SECRET_ACCESS_KEY=$(cat $HOME/.config/aws/secret_access_key)
+		export AWS_DEFAULT_REGION=us-east-1
+	fi
 fi
 
 case "$TERM" in
