@@ -1,3 +1,5 @@
+# Basic functionality
+
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 
 export HISTSIZE=10000
@@ -170,11 +172,23 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	fi
 fi
 
-case "$TERM" in
-	alacritty) export TERM=xterm-256color;;
-esac
+if [[ -d "$HOME/Projects/Pico/pico-sdk" ]]; then
+	export PICO_SDK_PATH="$HOME/Projects/Pico/pico-sdk"
+fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
+if [[ -f "$HOME/.local/pi" ]]; then
+	case "$TERM" in
+		alacritty) export TERM=xterm-256color;;
+	esac
+
+	# set a fancy prompt (non-color, unless we know we "want" color)
+	case "$TERM" in
+	    xterm-color|*-256color) color_prompt=yes;;
+	esac
+fi
+
+if type xclip > /dev/null; then
+	function cb() {
+		xclip -selection clipboard $1;
+	}
+fi
