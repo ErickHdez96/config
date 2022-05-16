@@ -159,11 +159,9 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 [ -d ~/.zsh/completion ] && fpath=(~/.zsh/completion $fpath)
 
 if [[ "$OSTYPE" == darwin* ]]; then
-	(( $+commands[wos] )) && source $(wos cli-vars cmp)
 	eval "$(pyenv init --path)"
 	eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
-	export COMPOSE_PROFILES=dev
 
 	if [[ -d "$HOME/.config/aws" ]]; then
 		export AWS_ACCESS_KEY=$(cat $HOME/.config/aws/access_key_id)
@@ -190,5 +188,9 @@ fi
 if type xclip > /dev/null; then
 	function cb() {
 		xclip -selection clipboard $1;
+	}
+elif type pbcopy > /dev/null; then
+	function cb() {
+		cat $1 | pbcopy;
 	}
 fi
